@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dy.mapper.BoardMapper">
+	
+	<!-- 글 쓰기 -->
+	<insert id="write">
+	<![CDATA[
+		insert into board(subject, content, writer, write_date)
+		values(#{subject},#{content},#{writer},sysdate())
+	]]>
+	</insert>
+	
+	<!-- 파일 업로드 -->
+	<insert id="file" parameterType="hashMap">
+	insert into file(no,filename,cfilename,file_size)
+	values(LAST_INSERT_ID(),#{ORG_FILE_NAME},#{STORED_FILE_NAME},#{FILE_SIZE})
+	</insert>
+	
+	<!-- 글 리스트 -->
+	<select id="listList" resultType="com.dy.model.BoardVO">
+	<![CDATA[
+		select * from board
+	]]>
+	</select>
+	
+	<!-- 글 리스트 페이징처리-->
+	<select id="boardList" resultType="com.dy.model.BoardVO">
+	
+		select no,subject,writer,write_date,cnt
+		from(select @rownum:=@rownum+1 as rownum, no, subject, writer,write_date,cnt
+		from (select @rownum:=0)as rownum,board
+		<if test="keyword!=null">
+		where subject like concat('%',#{keyword},'%')
+		</if>
+		order by no desc)board
+		<![CDATA[
+			where rownum >(#{pageNum}-1)*{amount}
+			and rownum <= #{pageNum}*#{amount}
+		]]>
+	</select>
+	
+	<!-- board테이블의 전체 갯수 : 페이징의 realEnd를 알기 위해서 -->
+	<select id="boardCount" resultType="int">
+		select count(*)from board
+		<if test="keyword != null">
+		where subject like concat('%',#{keyword},'%')
+		</if>
+	</select>
+	
+	<!-- 게시물 상세 내용 -->
+	<select id="view" resultType="com.dy.model.BoardVO">
+	<![CDATA[
+	select * from board where no=#{no}
+	]]>
+	</select> 
+	
+	<!-- 글 내용 수정 처리 -->
+	<update id="change">
+	update board set subject = #{subject}
+	, content = #{content}
+	where no = #{no}
+	</update>
+	
+	<!-- 글 삭제 처리 -->
+	<delete id="remove">
+	delete from board where no = #{no}
+	</delete>
+	
+	<!-- 첨부파일 조회 -->
+	<select id="filelist" parameterType="int" resultType="hashMap">
+	select file_no,filename,round(file_size/1024,1) as file_size from file
+	where no=#{no} and del_gb = 'n'
+	</select>
+</mapper>
