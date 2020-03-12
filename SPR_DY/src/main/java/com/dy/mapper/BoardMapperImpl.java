@@ -66,9 +66,22 @@ public class BoardMapperImpl implements BoardMapper{
 		
 		sqlSession.insert(namespace+".file",map);
 	}
-	//첨부파일 죄회
+	//첨부파일 조회
 	@Override
 	public List<Map<String,Object>> filelist(int no) throws Exception{
 		return sqlSession.selectList(namespace+".filelist",no);
 	}
+	//첨부파일 다운
+	@Override
+	public Map<String, Object> fileinfo(Map<String, Object> map) throws Exception {
+		
+		return sqlSession.selectOne(namespace+".fileinfo",map);
+	}
+	//게시글 조회수
+	@Override
+	public void addcnt(int no) throws Exception {
+		System.out.println("mapper="+no);
+		sqlSession.update(namespace+".addcnt",no);
+	}
+	
 }

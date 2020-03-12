@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!DOCTYPE html>
 <html>
+
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -24,7 +26,7 @@
 <h1>로그</h1>
 <form action="loginPost" method="post">
 	<table>
-		<tr><td><input type="text" name="id" placeholder="아이디"></td></tr>
+		<tr><td><input type="text" name="id" placeholder=""></td></tr>
 		<tr><td><input type="password" name="pw" placeholder="비밀번호"></td></tr>
 		<tr><td><input type="submit" value="Login"></td></tr>
 	</table>
@@ -52,14 +54,17 @@
 						</div>
 						<input type="password" class="form-control" name="pw" placeholder="비밀번호">
 					</div>
+					<!-- 
 					<div class="row align-items-center remember">
 						<input type="checkbox">Remember Me
 					</div>
+					 -->
 					<div class="form-group">
 						<input type="submit" value="Login" class="btn float-right login_btn">
 					</div>
 				</form>
 			</div>
+			<!-- 
 			<div class="card-footer">
 				<div class="d-flex justify-content-center links">
 					Don't have an account?<a href="#">Sign Up</a>
@@ -67,6 +72,7 @@
 				<div class="d-flex justify-content-center">
 					<a href="#">Forgot your password?</a>
 				</div>
+				 -->
 			</div>
 		</div>
 	</div>

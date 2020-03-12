@@ -6,7 +6,7 @@ var no=$("#reno").val();
 var str= "";
 $.getJSON("../member/all/"+no,function(data){	
 	$(data).each(function(){
-		str+="<li data-rno='"+this.rno+"'class='replyLi'>"+this.rtext+"<button></button><li>";
+		str+="<li data-rno='"+this.rno+"'class='replyLi'>"+this.rtext+"<button>수정</button><li>";
 	});
 	$("#replies").html(str);
 });
@@ -15,7 +15,7 @@ $.getJSON("../member/all/"+no,function(data){
 $(document).ready(function(){
 	//댓글 쓰기 버튼 클릭시
 	$("#replyadd").on("click",function(){
-		alert("aaaaa");
+		//alert("aaaaa");
 		var no=$("#reno").val();
 		var replyer=$("#rewriter").val();
 		var rtext=$("#retext").val();
@@ -27,10 +27,10 @@ $(document).ready(function(){
 			data:JSON.stringify({no:no,replyer:replyer,rtext:rtext}),
 			dataType:"text",
 			success:function(data){
-				alert("댓글 작성 ㅇ")
+				//alert("댓글 작성 ㅇ")
 			},
 			error:function(err){
-				alert("댓글 작성 x")
+				//alert("댓글 작성 x")
 			}
 		})
 	})
@@ -59,12 +59,12 @@ $(document).ready(function(){
 			dataType:"text",
 			success:function(data){
 				if(data=="SUCCESS"){
-					alert("글 수정o");
+					//alert("글 수정o");
 					$("#modDiv").hide("slow");
 				}
 			},
 			error:function(err){
-				alert("글 수정x");
+				//alert("글 수정x");
 			}
 		})
 	})
@@ -80,12 +80,12 @@ $(document).ready(function(){
 			dataType:"text",
 			success:function(data){
 				if(data=="SUCCESS"){
-					alert("삭제 o");
+					//alert("삭제 o");
 					$("#modDiv").hide("slow");
 				}
 			},
 			error:function(err){
-				alert("삭제x");
+				//alert("삭제x");
 			}
 		})
 	})

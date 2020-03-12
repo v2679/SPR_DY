@@ -31,6 +31,10 @@ public interface BoardService {
 	//게시판 글 삭제
 	public void remove(BoardVO board)throws Exception;
 	
+	
 	//첨부파일 조회
 	public List<Map<String, Object>> filelist(int no)throws Exception;
+	
+	//첨부파일 다운
+	public Map<String,Object> fileinfo(Map<String,Object>map)throws Exception;
 }

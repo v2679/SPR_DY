@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="com.dy.mapper.MemberMapperImpl"%>
 <%@ page import="com.dy.model.MemberVO" %>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -48,24 +48,38 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav text-uppercase ml-auto">
-          <li class="nav-item">
-            <p class="nav-link js-scroll-trigger" href="">${login.id } 님 환영합니다</p>
-          </li>
+         
+          <c:catch>
+          	<c:choose>
+          		<c:when test="${login.id==null }">
           <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="http://localhost:8080/kdy/member/join">MemberShip</a>
           </li>
           <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="http://localhost:8080/kdy/member/login">Login</a>
           </li>
+          </c:when>
+          <c:otherwise>
+           <li class="nav-item">
+            <p class="nav-link js-scroll-trigger" href="">${login.id } 님 환영합니다</p>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="http://localhost:8080/kdy/member/logout">Logout</a>
+          </li>
+          </c:otherwise>
+          </c:choose>
+          </c:catch>
           <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="http://localhost:8080/kdy/member/list">FreeBoard</a>
           </li>
+          <!-- 
           <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="#team">Team</a>
           </li>
           <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="#contact">Contact</a>
           </li>
+           -->
         </ul>
       </div>
     </div>
@@ -75,18 +89,18 @@
   <header class="masthead">
     <div class="container">
       <div class="intro-text">
-        <div class="intro-lead-in">Welcome To Our Studio!</div>
+        <div class="intro-lead-in">Welcome To companion!</div>
         <div class="intro-heading text-uppercase">It's Nice To Meet You</div>
         
         <div class="slider">
     	<div><a href="http://localhost:8080/kdy/member/husky">
-    			<img alt="" src="../resources/img/허스키.jpg" title="">
+    			<img alt="" src="../resources/img/1234.jpg" title="">
     		</a>
     	</div>
-    	<div><img alt="" src="../resources/img/고양이2.jpg" title=""></div>
+    	<div><img alt="" src="../resources/img/12345.jpg" title=""></div>
   		</div>
   		
-        <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#services">Tell Me More</a>
+       <!--  <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#services">Tell Me More</a>  -->
       </div>
     </div>
   </header>

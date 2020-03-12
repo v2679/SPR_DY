@@ -1,5 +1,7 @@
 package com.dy.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +58,7 @@ public class MemberController {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		return "redirect:home";
+		return "redirect:login";
 	}
 	/*회원탈퇴를 위한 controller*/
 	@RequestMapping(value="/out",method=RequestMethod.GET)
@@ -85,5 +87,13 @@ public class MemberController {
 		model.addAttribute("memberVO",member);
 		logger.info("login post.............");
 	}
-
+		
+	
+	
+	/*로그아웃을 위한 controller*/
+	@RequestMapping(value="/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "redirect:home";
+	}
 }

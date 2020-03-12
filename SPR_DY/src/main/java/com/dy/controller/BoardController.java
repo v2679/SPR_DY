@@ -1,7 +1,12 @@
+
 package com.dy.controller;
+import java.io.File;
+import java.net.URLEncoder;
 // sdfsafsdfsdsadsadfs
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,13 +41,14 @@ public class BoardController {
 	private ReplyService rservice;
 	
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
-	
+	/*
+	//게시글 목록 리스트
 	@RequestMapping(value="list",method=RequestMethod.GET)
 	public void listGet(Model model)throws Exception{
 		System.out.println("bservice.listList()="+bservice.listList());
 		model.addAttribute("list",bservice.listList());
-	}
-	/*
+	}*/
+	
 	//게시글 목록 리스트(페이징)
 	@RequestMapping(value="list", method=RequestMethod.GET)
 	public void listGet(Criteria cri,Model model)throws Exception{
@@ -52,7 +58,7 @@ public class BoardController {
 		model.addAttribute("list",bservice.boardList(cri));
 		model.addAttribute("page",pv);
 	}
-	*/
+	
 	/*글쓰기를 위한 컨트롤러*/
 	@RequestMapping(value="/write",method=RequestMethod.GET)
 	public String writeGet()throws Exception{
@@ -72,10 +78,10 @@ public class BoardController {
 		model.addAttribute("view",bservice.view(no));
 	}*/
 	
-	
+	/*글 내용보기를 위한 컨트롤러*/
 	@RequestMapping(value="view",method=RequestMethod.GET)
 	public String viewGet(BoardVO board,@RequestParam int no,Model model)throws Exception{
-		logger.info("view get..............");
+		logger.info("view get.............."+no);
 		model.addAttribute("view",bservice.view(no));
 		
 		List<Map<String,Object>> fileList = bservice.filelist(no);
@@ -84,8 +90,22 @@ public class BoardController {
 		return "member/view";
 	}
 	
-	
-	
+	/*파일다운로드를 위한 컨트롤러*/
+	@RequestMapping(value="/fileDown")
+	public void fileDown(@RequestParam Map<String, Object>map,HttpServletResponse response) throws Exception{
+		Map<String,Object>resultMap = bservice.fileinfo(map);
+		String storedFileName = (String) resultMap.get("STORED_FILE_NAME");
+		String originalFileName = (String) resultMap.get("ORG_FILE_NAME");
+		
+		byte fileByte[] = org.apache.commons.io.FileUtils.readFileToByteArray(new File("C:\\mp\\file\\"+storedFileName));
+		
+		response.setContentType("application/octet-stream");
+		response.setContentLength(fileByte.length);
+		response.setHeader("Content-Disposition",  "attachment; fileName=\""+URLEncoder.encode(originalFileName, "UTF-8")+"\";");
+		response.getOutputStream().write(fileByte);
+		response.getOutputStream().flush();
+		response.getOutputStream().close();
+	}
 	
 	
 	

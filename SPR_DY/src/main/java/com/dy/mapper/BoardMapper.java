@@ -29,9 +29,16 @@ public interface BoardMapper {
 	//게시판 글 삭제
 	public void remove(BoardVO board)throws Exception;
 	
+	//게시판 조회수
+	public void addcnt(int no)throws Exception;
+	
 	//첨부파일 업로드
 	public void insertFile(Map<String,Object>map)throws Exception;
 	
 	//첨부파일 조회
 	public List<Map<String,Object>> filelist(int no)throws Exception; 
+	
+	//첨부파일 다운
+	public Map<String, Object> fileinfo(Map<String,Object> map)throws Exception;
+
 }

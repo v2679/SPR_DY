@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -53,8 +54,11 @@ public class BoardServiceImpl implements BoardService{
 		}
 	}
 	//게시판 글 내용보기
+	@Transactional(isolation = Isolation.READ_COMMITTED)
 	@Override
 	public BoardVO view(int no) throws Exception {
+			System.out.println("service="+no);
+			bm.addcnt(no);
 		return bm.view(no);
 	}
 	//게시판 글 수정
@@ -67,10 +71,16 @@ public class BoardServiceImpl implements BoardService{
 	public void remove(BoardVO board) throws Exception {
 		bm.remove(board);
 	}
+
 	//첨부파일 조회
 	@Override
 	public List<Map<String, Object>> filelist(int no) throws Exception {
 		return bm.filelist(no);
+	}
+	//첨부파일 다운
+	@Override
+	public Map<String, Object> fileinfo(Map<String, Object> map) throws Exception {
+		return bm.fileinfo(map);
 	}
 
 

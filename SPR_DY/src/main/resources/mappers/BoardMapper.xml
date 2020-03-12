@@ -29,14 +29,14 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	<select id="boardList" resultType="com.dy.model.BoardVO">
 	
 		select no,subject,writer,write_date,cnt
-		from(select @rownum:=@rownum+1 as rownum, no, subject, writer,write_date,cnt
+		from(select @rownum:=@rownum+1 as rownum, no,subject,writer,write_date,cnt
 		from (select @rownum:=0)as rownum,board
 		<if test="keyword!=null">
 		where subject like concat('%',#{keyword},'%')
 		</if>
 		order by no desc)board
 		<![CDATA[
-			where rownum >(#{pageNum}-1)*{amount}
+			where rownum >(#{pageNum}-1)*#{amount}
 			and rownum <= #{pageNum}*#{amount}
 		]]>
 	</select>
@@ -68,9 +68,21 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	delete from board where no = #{no}
 	</delete>
 	
+	<!-- 게시판 조회수 -->
+	<update id="addcnt" parameterType="int">
+	update board set cnt = cnt+1
+	where no = #{no}
+	</update>
+	
+	
 	<!-- 첨부파일 조회 -->
 	<select id="filelist" parameterType="int" resultType="hashMap">
 	select file_no,filename,round(file_size/1024,1) as file_size from file
 	where no=#{no} and del_gb = 'n'
+	</select>
+	
+	<!-- 첨부파일 다운 -->
+	<select id="fileinfo" parameterType="hashMap" resultType="hashMap">
+	select cfilename,filename from file where file_no = #{FILE_NO}
 	</select>
 </mapper>
